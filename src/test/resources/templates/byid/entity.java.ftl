@@ -3,7 +3,6 @@ package ${package.Entity};
 <#list table.importPackages as pkg>
 import ${pkg};
 </#list>
-import com.baomidou.mybatisplus.annotation.TableId;
 <#if swagger2>
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -38,7 +37,8 @@ import lombok.experimental.Accessors;
 @ApiModel(value="${entity}对象", description="${table.comment!}")
 </#if>
 <#if superEntityClass??>
-public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if>{
+public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if>
+<Integer> {
 <#elseif activeRecord>
 public class ${entity} extends Model<${entity}> {
 <#else>

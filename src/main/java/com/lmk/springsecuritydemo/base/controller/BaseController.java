@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -46,12 +47,12 @@ public class BaseController<T extends BaseModel, VO extends T, SERVICE extends I
         return Ret.ok(items.getRecords(), items.getTotal());
     }
 
-    @PostMapping({"create.action"})
+    /*@PostMapping({"create.action"})
     @ResponseBody
     public Ret create(@RequestBody VO item, HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         this.service.save(item);
         return Ret.ok(item.getId());
-    }
+    }*/
 
     @PostMapping({"update.action"})
     @ResponseBody
@@ -60,7 +61,7 @@ public class BaseController<T extends BaseModel, VO extends T, SERVICE extends I
         return Ret.ok();
     }
 
-    @PostMapping({"delete.action"})
+    /*@PostMapping({"delete.action"})
     @ResponseBody
     public Ret<Void> delete(@RequestBody VO item, HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         this.service.removeById(item.getId());
@@ -71,5 +72,5 @@ public class BaseController<T extends BaseModel, VO extends T, SERVICE extends I
     @ResponseBody
     public Ret<T> findById(@RequestBody VO item, HttpServletRequest req, HttpServletResponse resp, HttpSession session) {
         return Ret.ok(this.service.getById(item.getId()));
-    }
+    }*/
 }

@@ -1,7 +1,7 @@
 package com.lmk.springsecuritydemo.sys.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.lmk.springsecuritydemo.base.entity.BaseModel;
+import com.lmk.springsecuritydemo.base.entity.BaseIdModel;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -21,8 +21,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("sys_permission_role")
 @ApiModel(value="PermissionRole对象", description="权限角色关系表")
-public class PermissionRole extends BaseModel
-<Integer> {
+public class PermissionRole extends BaseIdModel<Integer> {
 
     private static final long serialVersionUID = 1L;
 

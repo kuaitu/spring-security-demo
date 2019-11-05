@@ -8,12 +8,14 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.builder.ConfigBuilder;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
+import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.FileType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -24,13 +26,20 @@ public class CodeGenerator {
     @Getter
     @AllArgsConstructor
     static enum GenerateType {
-        NORMAL("4",
+        NORMAL("1",
                 "com.lmk.springsecuritydemo.base.controller.BaseController",
                 "com.lmk.springsecuritydemo.base.entity.BaseModel",
                 "com.lmk.springsecuritydemo.base.service.IBaseService",
                 "com.lmk.springsecuritydemo.base.service.impl.BaseServiceImpl",
                 "normal",
-                new String[] { "id" });
+                new String[] {}),
+        BY_ID("2",
+               "com.lmk.springsecuritydemo.base.controller.BaseController",
+               "com.lmk.springsecuritydemo.base.entity.BaseIdModel",
+               "com.lmk.springsecuritydemo.base.service.IBaseService",
+               "com.lmk.springsecuritydemo.base.service.impl.BaseServiceImpl",
+               "byid",
+               new String[] { "id" });
 
         /**
          * 不要改变下面的字段的顺序
@@ -66,9 +75,11 @@ public class CodeGenerator {
     }
 
     public static void main(String[] args) {
-        String type = scanner("输入要生成的类型： 4.统用");
+        String type = scanner("输入要生成的类型： 1.统用, 2使用ID");
 
-        if (GenerateType.NORMAL.getCode().equals(type)) {
+        if (GenerateType.BY_ID.getCode().equals(type)) {
+            generateType = GenerateType.BY_ID;
+        } else if (GenerateType.NORMAL.getCode().equals(type)) {
             generateType = GenerateType.NORMAL;
         } else {
             throw new IllegalArgumentException("请选择正确的类型，1~4");
@@ -87,6 +98,7 @@ public class CodeGenerator {
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor("linmk");
         gc.setOpen(false);
+        gc.setDateType(DateType.ONLY_DATE);
         gc.setSwagger2(true); //实体属性 Swagger2 注解
         mpg.setGlobalConfig(gc);
 
@@ -115,9 +127,7 @@ public class CodeGenerator {
         };
 
         // 如果模板引擎是 freemarker
-        String templatePath = "/templates/normal/mapper.xml.ftl";
-        // 如果模板引擎是 velocity
-        // String templatePath = "/templates/mapper.xml.vm";
+        String templatePath = "/templates/" + generateType.getTemplatePrefix() + "/mapper.xml.ftl";
 
         // 自定义输出配置
         List<FileOutConfig> focList = new ArrayList<>();
@@ -183,7 +193,10 @@ public class CodeGenerator {
         // 公共controller
         strategy.setSuperControllerClass(generateType.controllerClassName);
         // 写于父类中的公共字段
-        strategy.setSuperEntityColumns(generateType.superEntityColumns);
+        if (generateType.getSuperEntityColumns().length > 0) {
+            strategy.setSuperEntityColumns(generateType.getSuperEntityColumns());
+        }
+        strategy.setLogicDeleteFieldName("is_delete");
 
         mpg.setStrategy(strategy);
         mpg.setTemplateEngine(new FreemarkerTemplateEngine());// 设置模板引擎为freemarker
