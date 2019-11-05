@@ -2,6 +2,7 @@ package ${package.Controller};
 
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import io.swagger.annotations.*;
 
 <#if restControllerStyle>
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +22,9 @@ import ${package.Service}.${table.serviceName};
  * @author ${author}
  * @since ${date}
  */
+<#if table.comment??>
+@Api(tags = { "${table.comment!}" })
+</#if>
 <#if restControllerStyle>
 @RestController
 <#else>

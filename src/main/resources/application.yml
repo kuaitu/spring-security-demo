@@ -5,6 +5,13 @@ spring:
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
+  servlet:
+    multipart:
+      maxFileSize: 100MB
+      maxRequestSize: 100MB
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
   quartz:
     job-store-type: jdbc
     jdbc:
@@ -36,3 +43,11 @@ server:
   port: 8080
   servlet:
     context-path: /spring_security_demo
+    session:
+      timeout: 14400s
+      cookie:
+        secure: false
+        http-only: true
+
+swagger:
+  enable: true
