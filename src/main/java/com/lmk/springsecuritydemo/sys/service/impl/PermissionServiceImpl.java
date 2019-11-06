@@ -1,12 +1,14 @@
 package com.lmk.springsecuritydemo.sys.service.impl;
 
-import com.lmk.springsecuritydemo.sys.entity.Permission;
-import com.lmk.springsecuritydemo.sys.dao.PermissionMapper;
-import com.lmk.springsecuritydemo.sys.service.IPermissionService;
-import com.lmk.springsecuritydemo.base.service.impl.BaseServiceImpl;
-import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.lmk.springsecuritydemo.base.service.impl.BaseServiceImpl;
+import com.lmk.springsecuritydemo.sys.dao.PermissionMapper;
+import com.lmk.springsecuritydemo.sys.entity.Permission;
+import com.lmk.springsecuritydemo.sys.service.IPermissionService;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -22,5 +24,15 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionMapper, Per
     public Wrapper<Permission> buildWrapper(Permission example) {
         QueryWrapper<Permission> q = new QueryWrapper<>();
         return q;
+    }
+
+    @Override
+    public List<Permission> findByAdminUserId(Integer id) {
+        return baseMapper.findByAdminUserId(id);
+    }
+
+    @Override
+    public List<Permission> findAll() {
+        return baseMapper.findAll();
     }
 }

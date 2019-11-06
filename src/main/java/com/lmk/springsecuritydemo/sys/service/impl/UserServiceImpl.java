@@ -1,12 +1,12 @@
 package com.lmk.springsecuritydemo.sys.service.impl;
 
-import com.lmk.springsecuritydemo.sys.entity.User;
-import com.lmk.springsecuritydemo.sys.dao.UserMapper;
-import com.lmk.springsecuritydemo.sys.service.IUserService;
-import com.lmk.springsecuritydemo.base.service.impl.BaseServiceImpl;
-import org.springframework.stereotype.Service;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.lmk.springsecuritydemo.base.service.impl.BaseServiceImpl;
+import com.lmk.springsecuritydemo.sys.dao.UserMapper;
+import com.lmk.springsecuritydemo.sys.entity.User;
+import com.lmk.springsecuritydemo.sys.service.IUserService;
+import org.springframework.stereotype.Service;
 
 /**
  * <p>
@@ -22,5 +22,10 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     public Wrapper<User> buildWrapper(User example) {
         QueryWrapper<User> q = new QueryWrapper<>();
         return q;
+    }
+
+    @Override
+    public User findByUserName(String username) {
+        return baseMapper.findByUserName(username);
     }
 }

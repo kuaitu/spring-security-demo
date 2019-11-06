@@ -1,7 +1,9 @@
 package com.lmk.springsecuritydemo.sys.dao;
 
-import com.lmk.springsecuritydemo.sys.entity.Permission;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.lmk.springsecuritydemo.sys.entity.Permission;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +14,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2019-11-05
  */
 public interface PermissionMapper extends BaseMapper<Permission> {
-
+    List<Permission> findAll();
+    List<Permission> findByAdminUserId(int userId);
 }

@@ -14,14 +14,15 @@ import lombok.experimental.Accessors;
   * </p>
  *
  * @author linmk
- * @since 2019-11-05
+ * @since 2019-11-06
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Accessors(chain = true)
 @TableName("sys_role")
 @ApiModel(value="Role对象", description="角色表")
-public class Role extends BaseIdModel<Integer> {
+public class Role extends BaseIdModel
+<Integer> {
 
     private static final long serialVersionUID = 1L;
 

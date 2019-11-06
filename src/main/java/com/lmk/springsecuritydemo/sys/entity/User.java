@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
+import java.util.List;
+
 /**
  * <p>
   * 用户表
@@ -21,7 +23,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 @TableName("sys_user")
 @ApiModel(value="User对象", description="用户表")
-public class User extends BaseIdModel<Integer> {
+public class User extends BaseIdModel<Integer>  {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,5 +33,5 @@ public class User extends BaseIdModel<Integer> {
     @ApiModelProperty(value = "密码")
     private String password;
 
-
+    private List<Role> roles;
 }
