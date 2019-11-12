@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import java.util.List;
-
 /**
  * <p>
   * 用户表
@@ -32,6 +30,4 @@ public class User extends BaseIdModel<Integer>  {
 
     @ApiModelProperty(value = "密码")
     private String password;
-
-    private List<Role> roles;
 }

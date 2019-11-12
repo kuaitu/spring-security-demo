@@ -6,6 +6,7 @@ import com.lmk.springsecuritydemo.base.service.impl.BaseServiceImpl;
 import com.lmk.springsecuritydemo.sys.dao.PermissionMapper;
 import com.lmk.springsecuritydemo.sys.entity.Permission;
 import com.lmk.springsecuritydemo.sys.service.IPermissionService;
+import com.lmk.springsecuritydemo.sys.vo.PermissionVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,7 +33,7 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionMapper, Per
     }
 
     @Override
-    public List<Permission> findAll() {
+    public List<PermissionVO> findAll() {
         return baseMapper.findAll();
     }
 }

@@ -2,6 +2,7 @@ package com.lmk.springsecuritydemo.sys.dao;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lmk.springsecuritydemo.sys.entity.User;
+import com.lmk.springsecuritydemo.sys.vo.UserVO;
 
 /**
  * <p>
@@ -12,5 +13,5 @@ import com.lmk.springsecuritydemo.sys.entity.User;
  * @since 2019-11-05
  */
 public interface UserMapper extends BaseMapper<User> {
-    User findByUserName(String username);
+    UserVO findByUserName(String username);
 }

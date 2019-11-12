@@ -2,6 +2,7 @@ package com.lmk.springsecuritydemo.sys.service;
 
 import com.lmk.springsecuritydemo.base.service.IBaseService;
 import com.lmk.springsecuritydemo.sys.entity.User;
+import com.lmk.springsecuritydemo.sys.vo.UserVO;
 
 /**
  * <p>
@@ -13,5 +14,5 @@ import com.lmk.springsecuritydemo.sys.entity.User;
  */
 public interface IUserService extends IBaseService<User> {
 
-    User findByUserName(String username);
+    UserVO findByUserName(String username);
 }

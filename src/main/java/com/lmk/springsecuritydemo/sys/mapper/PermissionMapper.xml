@@ -2,8 +2,27 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--suppress ALL -->
 <mapper namespace="com.lmk.springsecuritydemo.sys.dao.PermissionMapper">
-    <select id="findAll"  resultType="com.lmk.springsecuritydemo.sys.entity.Permission">
-       SELECT * from sys_permission;
+    <resultMap id="permissionMap" type="com.lmk.springsecuritydemo.sys.vo.PermissionVO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="description" column="description"/>
+        <result property="url" column="url"/>
+        <result property="pid" column="pid"/>
+        <collection property="roleList" ofType="com.lmk.springsecuritydemo.sys.entity.Role">
+            <id property="id" column="role_id"/>
+            <result column="role_name" property="name"/>
+        </collection>
+    </resultMap>
+
+    <select id="findAll"  resultMap="permissionMap">
+        SELECT
+            sp.*,
+            sr.id AS role_id,
+            sr.`name` AS role_name
+        FROM
+            sys_permission sp
+        LEFT JOIN sys_permission_role spr ON sp.id = spr.permission_id
+        LEFT JOIN sys_role sr ON spr.role_id = sr.id
     </select>
 
     <select id="findByAdminUserId" parameterType="int" resultType="com.lmk.springsecuritydemo.sys.entity.Permission">

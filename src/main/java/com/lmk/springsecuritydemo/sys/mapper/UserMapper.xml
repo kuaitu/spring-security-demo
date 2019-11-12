@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--suppress ALL -->
 <mapper namespace="com.lmk.springsecuritydemo.sys.dao.UserMapper">
-    <resultMap id="userMap" type="com.lmk.springsecuritydemo.sys.entity.User">
+    <resultMap id="userMap" type="com.lmk.springsecuritydemo.sys.vo.UserVO">
         <id property="id" column="ID"/>
         <result property="username" column="username"/>
         <result property="password" column="PASSWORD"/>
-        <collection property="roles" ofType="com.lmk.springsecuritydemo.sys.entity.Role">
+        <collection property="roleList" ofType="com.lmk.springsecuritydemo.sys.entity.Role">
             <result column="name" property="name"/>
         </collection>
     </resultMap>
