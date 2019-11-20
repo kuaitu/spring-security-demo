@@ -12,15 +12,20 @@ spring:
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
-  resources:
-    static-locations: classpath:/**
+  #resources:
+    #static-locations: classpath:/*
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
   thymeleaf:
     mode: HTML5
     encoding: UTF-8
     #开发时关闭缓存,不然没法看到实时页面
     cache: false
     #static 文件夹下的静态文件访问路径
-  mvc.static-path-pattern: /**
+  #mvc.static-path-pattern: /**
     #thymeleaf end
   quartz:
     job-store-type: jdbc

@@ -12,6 +12,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.web.filter.CharacterEncodingFilter;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -49,12 +51,36 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) {
-        web.ignoring().antMatchers("/index.html","/favicon.ico");
+        //解决静态资源被拦截的问题
+        web.ignoring().antMatchers("/home.html","/favicon.ico");
+
+        web.ignoring().antMatchers("/css/**");
+        web.ignoring().antMatchers("/js/**");
+        web.ignoring().antMatchers("/images/**");
+        web.ignoring().antMatchers("/lib/**");
+        web.ignoring().antMatchers("/fonts/**");
+        web.ignoring().antMatchers("/lang/**");
+        web.ignoring().antMatchers("/login/**");
+        web.ignoring().antMatchers("/error/**");
+        web.ignoring().antMatchers("/login.html");
+        //解决服务注册url被拦截的问题
+        web.ignoring().antMatchers("/swagger-ui.html");
+        web.ignoring().antMatchers("/swagger-resources/**");
+        web.ignoring().antMatchers("/webjars/**");
+        web.ignoring().antMatchers("/v2/**");
+        web.ignoring().antMatchers("/**/*.json");
+
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        //解决中文乱码问题
+        CharacterEncodingFilter filter = new CharacterEncodingFilter();
+        filter.setEncoding("UTF-8");
+        filter.setForceEncoding(true);
+
+        http.addFilterBefore(filter,CsrfFilter.class)
+            .csrf().disable()
             .authorizeRequests()
             .withObjectPostProcessor(new ObjectPostProcessor<FilterSecurityInterceptor>() {
                 @Override
@@ -70,6 +96,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
             .and()
             .formLogin()  //开启登录
+            .loginPage("/login.html")
+            .loginProcessingUrl("/login.action")
             .successHandler(successAuthenticationHandler)
             .failureHandler(failureAuthenticationHandler)
             .permitAll()
