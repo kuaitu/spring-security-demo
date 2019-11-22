@@ -43,6 +43,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private UnauthorizedEntryPoint unauthorizedEntryPoint;
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
@@ -63,6 +66,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/login/**");
         web.ignoring().antMatchers("/error/**");
         web.ignoring().antMatchers("/login.html");
+
+        // 系统所有不需要登录就能访问的接口
+        // web.ignoring().antMatchers("/Open/**");
+
         //解决服务注册url被拦截的问题
         web.ignoring().antMatchers("/swagger-ui.html");
         web.ignoring().antMatchers("/swagger-resources/**");
@@ -96,7 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
             .and()
             .formLogin()  //开启登录
-            .loginPage("/login.html")
+            //.loginPage("/login.html")
             .loginProcessingUrl("/login.action")
             .successHandler(successAuthenticationHandler)
             .failureHandler(failureAuthenticationHandler)
@@ -107,6 +114,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .logoutUrl("/logout")
             .permitAll()
             .and()
-            .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
+            .exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler);
     }
 }
